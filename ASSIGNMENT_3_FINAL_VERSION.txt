@@ -1,0 +1,29 @@
+# Imports go at the top
+from microbit import *
+import log
+
+# Code in a 'while True:' loop repeats forever
+while True:
+    def log_data(): #measures and logs temp, sound and light level
+        log.add({
+          'temperature': temperature(),
+          'sound': microphone.sound_level(),
+          'light': display.read_light_level()
+        })
+    def log_motion(): #measures and logs motions
+        log.add({
+            'motion_on_x':accelerometer.get_x(),
+            'motion_on_y':accelerometer.get_y(),
+            'motion_on_z':accelerometer.get_z(),
+        })
+        
+               
+    if button_a.was_pressed(): #press to measure temp, sound and light
+        log_data()
+        display.show(Image.SURPRISED)
+        sleep(1000)
+    if button_b.was_pressed(): #press to measure motion
+        log_motion()
+        display.show(Image.CONFUSED)
+        sleep(1000)
+    display.show(Image.ASLEEP)
